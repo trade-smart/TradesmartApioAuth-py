@@ -65,7 +65,7 @@ with open('cred.yml') as f:
     print(cred)
 
 #ret = api.login(userid = cred['user'], password = cred['pwd'], twoFA=cred['factor2'], vendor_code=cred['vc'], api_secret=cred['apikey'], imei=cred['imei'])
-injected_headers = api.injectOAuthHeader(cred['Access_token'],cred['UID'],cred['Account_ID'])
+ret = injected_headers = api.injectOAuthHeader(cred['Access_token'],cred['UID'],cred['Account_ID'])
 
 if ret != None:   
     while True:
@@ -145,6 +145,14 @@ if ret != None:
             if socket_opened == True:
                 print('websocket already opened')
                 continue
+
+            # Set credentials safely
+            api.set_credentials(
+                cred['Access_token'],
+                cred['UID'],
+                cred['Account_ID']
+            )
+                
             ret = api.start_websocket(order_update_callback=event_handler_order_update, subscribe_callback=event_handler_quote_update, socket_open_callback=open_callback)
             print(ret)
 

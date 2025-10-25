@@ -3,6 +3,8 @@ import logging
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import yaml
+import subprocess
+
 
 #enable dbug to see request and responses
 logging.basicConfig(level=logging.DEBUG)
@@ -15,8 +17,21 @@ with open('cred.yml', 'r') as f:
     cred = yaml.load(f, Loader=yaml.FullLoader) or {}
 
 #credentials
-apikey_url = api.getOAuthURL(cred['oauth_url'],cred['API_KEY'])
+apikey_url = api.getOAuthURL(cred['oauth_url'],cred['clinet_id'])
 logging.info(apikey_url)
+
+subprocess.Popen(
+    [
+        "google-chrome",
+        "--disable-crash-reporter",
+        "--no-default-browser-check",
+        "--no-first-run",
+        "--disable-logging",
+        apikey_url,
+    ],
+    stdout=subprocess.DEVNULL,   # hide stdout
+    stderr=subprocess.DEVNULL    # hide Chrome's internal error logs
+)
 
 # Redirect the user to the login url saved in apikey_url varibale obtained from api.getOAuthURL function
 # Receive the authentication code and from the redirect url after the login.
@@ -26,7 +41,7 @@ auth_code = "your_auth_code_here"
 if auth_code == "your_auth_code_here":
     auth_code = input("Enter your auth code here: ")
 
-result = api.getAccessToken(auth_code, cred['SECRET_KEY'], cred['API_KEY'], cred['UID'])
+result = api.getAccessToken(auth_code, cred['Secret_Code'], cred['clinet_id'], cred['UID'])
 if result is not None:
     acc_tok, usrid, ref_tok, actid = result
     logging.info(f"""\nAccess token is : {acc_tok} \nRefresh token is : {ref_tok} \nUser ID token is : {usrid} \nAccount ID is : {actid} \n""")

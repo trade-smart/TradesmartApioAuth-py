@@ -1,4 +1,4 @@
-from NorenRestApiPy.NorenApi import  NorenApi
+from NorenRestApiOAuth.NorenApi import  NorenApi
 from threading import Timer
 import pandas as pd
 import time
@@ -39,7 +39,7 @@ def get_time(time_string):
 
 class NorenApiPy(NorenApi):
     def __init__(self):
-        NorenApi.__init__(self, host='http://test.kambala.co.in:6008/NorenWClient/', websocket='ws://test.kambala.co.in:9657/NorenWS/')
+        NorenApi.__init__(self, host='https://rama.kambala.co.in/NorenWClientTP/', websocket='wss://rama.kambala.co.in/NorenWS/')
         global api
         api = self
     def place_basket(self, orders):
