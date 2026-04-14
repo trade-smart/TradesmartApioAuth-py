@@ -260,6 +260,7 @@ Request Details :
 |bookloss_price|blprc||Book loss Price applicable only if product is selected as H and B (High Leverage and Bracket order ) |
 |trail_price|trailprc||Trailing Price applicable only if product is selected as H and B (High Leverage and Bracket order ) |
 |amo|amo||Yes , If not sent, of Not “Yes”, will be treated as Regular order. |
+|algo_id|algo_id||algo id|
 
 
 Response Details :
